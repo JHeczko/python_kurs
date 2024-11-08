@@ -1,6 +1,7 @@
 import math
 import numpy as np
 import unittest
+from fractions import Fraction
 
 def minimalize(frac):
     nwd = 0
@@ -62,7 +63,8 @@ def cmp_frac(frac1, frac2):
 
 # konwersja do float
 def frac2float(frac):
-    return float(frac[0]/frac[1])
+    return float(Fraction(frac[0], frac[1]))
+
 
 class TestFractions(unittest.TestCase):
 
@@ -110,11 +112,13 @@ class TestFractions(unittest.TestCase):
 
     def test_cmp_frac(self):
         self.assertEqual(cmp_frac([3,5], [1,2]), 1)
-        self.assertEqual(cmp_frac([16, 32], [1, 2]), 0)
+        self.assertEqual(cmp_frac([64, 128], [1, 2]), 0)
         self.assertEqual(cmp_frac([2,5], [1,2]), -1)
 
-    def test_frac2float(self): pass
-
+    def test_frac2float(self):
+        self.assertAlmostEqual(frac2float([3,5]), 0.6, delta=1e-14)
+        self.assertAlmostEqual(frac2float([1,3]), 0.33333333333333333333, delta=1e-14)
+        self.assertAlmostEqual(frac2float([5, 3]), 1.666666666666666, delta=1e-14)
     def tearDown(self): pass
 
 if __name__ == '__main__':
