@@ -1,54 +1,112 @@
-def add_poly(poly1, poly2): pass        # poly1(x) + poly2(x)
-
-def sub_poly(poly1, poly2): pass        # poly1(x) - poly2(x)
-
-def mul_poly(poly1, poly2): pass        # poly1(x) * poly2(x)
-
-def is_zero(poly): pass                 # bool, [0], [0,0], itp.
-
-def eq_poly(poly1, poly2): pass        # bool, porównywanie poly1(x) == poly2(x)
-
-def eval_poly(poly, x0): pass           # poly(x0), algorytm Hornera
-
-def combine_poly(poly1, poly2): pass    # poly1(poly2(x)), trudne!
-
-def pow_poly(poly, n): pass             # poly(x) ** n
-
-def diff_poly(poly): pass               # pochodna wielomianu
-
-# p1 = [2, 1]                   # W(x) = 2 + x
-# p2 = [2, 1, 0]                # jw  (niejednoznaczność)
-# p3 = [-3, 0, 1]               # W(x) = -3 + x^2
-# p4 = [3]                      # W(x) = 3, wielomian zerowego stopnia
-# p5 = [0]                      # zero
-# p6 = [0, 0, 0]                # zero (niejednoznaczność)
-
+import math
+import numpy as np
 import unittest
 
-class TestPolynomials(unittest.TestCase):
+def minimalize(frac):
+    nwd = 0
+    sign = 1 if frac[0]*frac[1] > 0 else -1
+    frac = np.abs(frac)
+
+    if frac[0] == 0:
+        return [0,1]
+    if frac[1] == 0:
+        raise ZeroDivisionError
+
+    while nwd != 1:
+        nwd = math.gcd(int(frac[0]),int(frac[1]))
+        frac = [int(frac[0]/nwd), int(frac[1]/nwd)]
+    frac[1] *= sign
+    return frac
+
+def add_frac(frac1, frac2):        # frac1 + frac2
+    frac1 = minimalize(frac1)
+    frac2 = minimalize(frac2)
+    return minimalize([int((frac1[0]*frac2[1]) + (frac1[1]*frac2[0])),int(frac1[1]*frac2[1])])
+
+
+# frac1 - frac2
+def sub_frac(frac1, frac2):
+    frac1 = minimalize(frac1)
+    frac2 = minimalize(frac2)
+    return minimalize([int((frac1[0]*frac2[1]) - (frac1[1]*frac2[0])),int(frac1[1]*frac2[1])])
+
+# frac1 * frac2
+def mul_frac(frac1, frac2):
+    frac1 = minimalize(frac1)
+    frac2 = minimalize(frac2)
+    return minimalize([int(frac1[0]*frac2[0]), int(frac1[1]*frac2[1])])
+
+# frac1 / frac2
+def div_frac(frac1, frac2):
+    frac1 = minimalize(frac1)
+    frac2 = minimalize(frac2)
+    return minimalize([int(frac1[0]*frac2[1]), int(frac1[1]*frac2[0])])
+
+# bool, czy dodatni
+def is_positive(frac):
+    return True if frac[0] * frac[1] > 0 else False
+
+# bool, typu [0, x]
+def is_zero(frac):
+    return minimalize(frac) == [0,1]
+
+# -1 | 0 | +1
+def cmp_frac(frac1, frac2):
+    frac1 *= frac2[1]
+    frac2 *= frac1[1]
+    if frac1[0]>frac2[0]:
+        return 1
+    elif frac1[0]<frac2[0]:
+        return -1
+    else:
+        return 0
+
+# konwersja do float
+def frac2float(frac):
+    return float(frac[0]/frac[1])
+
+class TestFractions(unittest.TestCase):
 
     def setUp(self):
-        self.p1 = [0, 1]      # W(x) = x
-        self.p2 = [0, 0, 1]   # W(x) = x^2
+        self.zero = [0, 17]
+        self.f1 = [-1,2]
+        self.f2 = [1,-2]
+        self.f3 = [1,0]
+        self.f4 = [0, 2]
+        self.f5 = [3, 1]
+        self.f6 = [6, 2]
 
-    def test_add_poly(self):
-        self.assertEqual(add_poly(self.p1, self.p2), [0, 1, 1])
+    def test_minimalize(self):
+        self.assertEqual(minimalize([0,17]), [0, 1])
+        self.assertEqual(minimalize([-1,2]), [1, -2])
+        self.assertEqual(minimalize([18,12]), [3, 2])
+        self.assertRaises(ZeroDivisionError,minimalize,[2,0])
 
-    def test_sub_poly(self): pass
+    def test_add_frac(self):
+        self.assertEqual(add_frac([1, 2], [1, 3]), [5, 6])
+        self.assertEqual(add_frac([3,4],[1,2]), [5, 4])
+        self.assertEqual(add_frac([3,4],[-1,2]), [1, 4])
+        self.assertEqual(add_frac([3, 4], [-4, 4]), [1, -4])
 
-    def test_mul_poly(self): pass
+    def test_sub_frac(self): pass
 
-    def test_is_zero(self): pass
+    def test_mul_frac(self): pass
 
-    def test_eq_poly(self): pass
+    def test_div_frac(self): pass
 
-    def test_eval_poly(self): pass
+    def test_is_positive(self): pass
 
-    def test_combine_poly(self): pass
+    def test_is_zero(self):
+        self.assertTrue(is_zero([0,14]))
+        self.assertTrue(is_zero([0, -14]))
+        self.assertFalse(is_zero([1,2]))
+        self.assertFalse(is_zero([1, -2]))
+        self.assertFalse(is_zero([-1, -2]))
+        self.assertRaises(ZeroDivisionError, is_zero,[3,0])
 
-    def test_pow_poly(self): pass
+    def test_cmp_frac(self): pass
 
-    def test_diff_poly(self): pass
+    def test_frac2float(self): pass
 
     def tearDown(self): pass
 
