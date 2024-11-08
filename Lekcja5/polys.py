@@ -52,11 +52,10 @@ def is_zero(frac):
 
 # -1 | 0 | +1
 def cmp_frac(frac1, frac2):
-    frac1 *= frac2[1]
-    frac2 *= frac1[1]
-    if frac1[0]>frac2[0]:
+    print(frac1, frac2,sep='\n')
+    if frac1[0]*frac2[1]>frac2[0]*frac1[1]:
         return 1
-    elif frac1[0]<frac2[0]:
+    elif frac1[0]*frac2[1]<frac2[0]*frac1[1]:
         return -1
     else:
         return 0
@@ -67,14 +66,7 @@ def frac2float(frac):
 
 class TestFractions(unittest.TestCase):
 
-    def setUp(self):
-        self.zero = [0, 17]
-        self.f1 = [-1,2]
-        self.f2 = [1,-2]
-        self.f3 = [1,0]
-        self.f4 = [0, 2]
-        self.f5 = [3, 1]
-        self.f6 = [6, 2]
+    def setUp(self): pass
 
     def test_minimalize(self):
         self.assertEqual(minimalize([0,17]), [0, 1])
@@ -88,13 +80,25 @@ class TestFractions(unittest.TestCase):
         self.assertEqual(add_frac([3,4],[-1,2]), [1, 4])
         self.assertEqual(add_frac([3, 4], [-4, 4]), [1, -4])
 
-    def test_sub_frac(self): pass
+    def test_sub_frac(self):
+        self.assertEqual(sub_frac([3, 5], [1, 3]), [4, 15])
+        self.assertEqual(sub_frac([5,8], [1,8]),[1,2])
 
-    def test_mul_frac(self): pass
+    def test_mul_frac(self):
+        self.assertEqual(mul_frac([3, 5], [1, 3]), [1, 5])
+        self.assertEqual(mul_frac([5,8], [2,8]),[5,32])
+        self.assertRaises(ZeroDivisionError,mul_frac, [3,0], [1,1])
 
-    def test_div_frac(self): pass
+    def test_div_frac(self):
+        self.assertEqual(div_frac([3, 5], [3, 5]), [1, 1])
+        self.assertEqual(div_frac([5,8], [3,8]),[5,3])
+        self.assertRaises(ZeroDivisionError,div_frac, [3,0], [1,1])
 
-    def test_is_positive(self): pass
+    def test_is_positive(self):
+        self.assertTrue(is_positive([1,2]))
+        self.assertFalse(is_positive([-2,1]))
+        self.assertFalse(is_positive([2, -1]))
+        self.assertTrue(is_positive([-2, -1]))
 
     def test_is_zero(self):
         self.assertTrue(is_zero([0,14]))
@@ -104,7 +108,10 @@ class TestFractions(unittest.TestCase):
         self.assertFalse(is_zero([-1, -2]))
         self.assertRaises(ZeroDivisionError, is_zero,[3,0])
 
-    def test_cmp_frac(self): pass
+    def test_cmp_frac(self):
+        self.assertEqual(cmp_frac([3,5], [1,2]), 1)
+        self.assertEqual(cmp_frac([16, 32], [1, 2]), 0)
+        self.assertEqual(cmp_frac([2,5], [1,2]), -1)
 
     def test_frac2float(self): pass
 
