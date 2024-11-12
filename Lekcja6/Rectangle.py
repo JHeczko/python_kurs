@@ -1,29 +1,33 @@
-from points import Point
+from .Point import Point2D as Point
+from .Shape import Shape
 
-class Rectangle:
-    """Klasa reprezentująca prostokąt na płaszczyźnie."""
+"""Klasa reprezentująca prostokąt na płaszczyźnie."""
+class Rectangle(Shape):
 
     def __init__(self, x1, y1, x2, y2):
         self.pt1 = Point(x1, y1)
         self.pt2 = Point(x2, y2)
+        if self.pt1 == self.pt2:
+            raise ValueError("This is a point not a rectangle")
 
-    def __str__(self): pass         # "[(x1, y1), (x2, y2)]"
+    # "[(x1, y1), (x2, y2)]"
+    def __str__(self): pass
 
-    def __repr__(self): pass        # "Rectangle(x1, y1, x2, y2)"
+    # "Rectangle(x1, y1, x2, y2)"
+    def __repr__(self): pass
 
-    def __eq__(self, other): pass   # obsługa rect1 == rect2
+    # obsługa rect1 == rect2
+    def __eq__(self, other): pass
 
-    def __ne__(self, other):        # obsługa rect1 != rect2
+    # obsługa rect1 != rect2
+    def __ne__(self, other):
         return not self == other
 
-    def center(self): pass          # zwraca środek prostokąta
+    # zwraca środek prostokąta
+    def center(self): pass
 
-    def area(self): pass            # pole powierzchni
+    # pole powierzchni
+    def area(self): pass
 
-    def move(self, x, y): pass      # przesunięcie o (x, y)
-
-# Kod testujący moduł.
-
-import unittest
-
-class TestRectangle(unittest.TestCase): pass
+    # przesunięcie o (x, y)
+    def move(self, x, y): pass
