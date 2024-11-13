@@ -63,7 +63,7 @@ def cmp_frac(frac1, frac2):
 
 # konwersja do float
 def frac2float(frac):
-    return float(frac[0]/frac[1])
+    return frac[0]/frac[1]
 
 
 class TestFractions(unittest.TestCase):
