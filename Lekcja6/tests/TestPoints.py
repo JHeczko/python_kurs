@@ -21,3 +21,6 @@ class TestPoints(unittest.TestCase):
 
     def test_equal(self):
         self.assertEqual(self.pt1, self.pt11)
+
+if __name__ == '__main__':
+    unittest.main()

@@ -35,3 +35,6 @@ class TestTriangle(unittest.TestCase):
     def test_move(self):
         self.assertEqual(self.tr1.move(2,2), self.tr2.move(2,2))
         self.assertEqual(self.tr3.move(2,2), Triangle(4,4,4,6,6,6))
+
+if __name__ == '__main__':
+    unittest.main()
