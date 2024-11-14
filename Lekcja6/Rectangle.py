@@ -8,8 +8,6 @@ class Rectangle(Shape):
     def __init__(self, x1, y1, x2, y2):
         self.pt1 = Point(x1, y1)
         self.pt2 = Point(x2, y2)
-        if self.pt1 == self.pt2:
-            raise ValueError("This is a point not a rectangle")
 
     # "[(x1, y1), (x2, y2)]"
     def __str__(self):
