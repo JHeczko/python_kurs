@@ -9,6 +9,10 @@ class TestTriangle(unittest.TestCase):
         self.tr3 = Triangle(2,2,2,4,4,4)
         self.tr4 = Triangle(0,0,4,0,2,2)
 
+    def test_init(self):
+        self.assertRaises(TypeError, Triangle.__init__, 1,1,1,1,2,2)
+        self.assertRaises(TypeError, Triangle.__init__, 1, 1, 1, 1, 1, 1)
+        self.assertRaises(TypeError, Triangle.__init__, 2, 2, 1, 1, 1, 1)
     def test_rep(self):
         self.assertEqual(repr(self.tr1), "Triangle(1, 2, 3, 4, 5, 6)")
         self.assertEqual(repr(self.tr3), "Triangle(2, 2, 2, 4, 4, 4)")

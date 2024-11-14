@@ -9,6 +9,9 @@ class TestRectangle(unittest.TestCase):
         self.tr2 = Rectangle(1,2,3,4)
         self.tr3 = Rectangle(2,2,4,4)
 
+    def test_init(self):
+        self.assertRaises(TypeError, Rectangle.__init__, 1,1,1,1)
+
     def test_rep(self):
         self.assertEqual(repr(self.tr1), "Rectangle(1, 2, 3, 4)")
 

@@ -8,6 +8,9 @@ class Triangle(Shape):
         self.pt1 = Point(x1, y1)
         self.pt2 = Point(x2, y2)
         self.pt3 = Point(x3, y3)
+        self.ptAll = [self.pt1, self.pt2, self.pt3]
+        if self.pt1 == self.pt2 or self.pt3 == self.pt1 or self.pt2 == self.pt3:
+            raise ValueError("This is straight line not a triangle")
 
     def __iter__(self):
         return iter([self.pt1, self.pt2, self.pt3])
