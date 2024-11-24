@@ -1,15 +1,26 @@
+import math
+
 import numpy as np
 
 class Point2D:
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
+        self.x = float(x)
+        self.y = float(y)
     def __str__(self):
         return f"({self.x}, {self.y})"
     def __repr__(self):
         return f"Point({self.x}, {self.y})"
     def __hash__(self):
         return hash((self.x, self.y))
+
+    def __lt__(self, other):
+        return (self.x, self.y) < (other.x, other.y)
+
+    def __gt__(self, other):
+        return (self.x, self.y) > (other.x, other.y)
+
+    def __eq__(self, other):
+        return (self.x, self.y) == (other.x, other.y)
 
     def __add__(self, other):
         return Point2D(self.x + other.x, self.y + other.y)
@@ -39,3 +50,6 @@ class Point2D:
 
     def __len__(self):
         return np.sqrt(self.x ** 2 + self.y ** 2)
+
+    def _euk_from_zero(self):
+        return math.sqrt((self.x ** 2) + (self.y ** 2))
