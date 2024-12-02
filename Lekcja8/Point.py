@@ -1,9 +1,10 @@
+from dataclasses import dataclass
 import numpy as np
 
 class Point2D:
     def __init__(self, x, y):
-        self.x = float(x)
-        self.y = float(y)
+        self._x = float(x)
+        self._y = float(y)
     def __str__(self):
         return f"({self.x}, {self.y})"
     def __repr__(self):
@@ -26,6 +27,14 @@ class Point2D:
         self.x -= other.x
         self.y -= other.y
         return self
+
+    @property
+    def x(self):
+        return self._x
+
+    @property
+    def y(self):
+        return self._y
 
     def __getitem__(self, key):
         if not isinstance(key, str):
