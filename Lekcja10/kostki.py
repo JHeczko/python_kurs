@@ -14,8 +14,7 @@ class Application(tk.Frame):
 
         self.text_font = ("System", 20, "bold")
         self.output_text = tk.StringVar(value="Kliknij guzik na dole, aby rzucić kostką!")
-        self.image_dice = tk.PhotoImage(file="./image/3.png")
-        self.photo_dice = None
+        self.image_dice = tk.PhotoImage(file="")
 
         self.pack(fill="both", expand=True)
 
@@ -26,12 +25,14 @@ class Application(tk.Frame):
 
         self.createWidgets()
 
-    def random_number(self):
-        self.output_text.set(f"Wylosowałeś: {random.randint(1,6)}")
-        self.image_dice = tk.PhotoImage(file="./image/3.png")
-
 
     def createWidgets(self):
+        def random_number(photo_dice):
+            random_int = random.randint(1, 6)
+            self.image_dice = tk.PhotoImage(file=f"./image/{random_int}.png")
+            self.output_text.set(f"Wylosowałeś: {random_int}")
+            photo_dice.config(image=self.image_dice)
+
         # Create upper and lower frames
         upper_label = tk.Frame(self, height=50, bg="#262626")
 
@@ -58,14 +59,14 @@ class Application(tk.Frame):
             activeforeground="black",  # Text color when hovered
             highlightthickness=0,  # Remove button border highlight
             borderwidth=0,  # Adjust border thickness
-            command=self.random_number
+            command=lambda: random_number(photo_dice)
         )
 
         info_random = tk.Label(lower_label, textvariable=self.output_text, font=self.text_font, fg="lightblue", bg='#262626')
-        self.photo_dice = tk.Label(lower_label,bg="#262626", image=self.image_dice)
+        photo_dice = tk.Label(lower_label,bg="#262626", image=self.image_dice)
 
         info_random.grid(row=0,column=0, sticky="nsew")
-        self.photo_dice.grid(row=1, column=0, sticky="nsew")
+        photo_dice.grid(row=1, column=0, sticky="nsew")
         play_button.grid(row=2, column=0)
 
         # Setting up grid
