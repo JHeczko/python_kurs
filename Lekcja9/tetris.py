@@ -91,6 +91,11 @@ if __name__ == "__main__":
     game_over = False
 
     while not done:
+        # checkinh if victory
+        if len(group_static) == 10:
+            print("JEst")
+            done = True
+
         # main event handling loop
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -99,10 +104,12 @@ if __name__ == "__main__":
                     game_over = True
                 if event.key == pygame.K_a:
                     for sprite in group_falling:
-                        sprite.rect.move_ip(-50, 0)
+                        if sprite.rect.x> 0:
+                            sprite.rect.move_ip(-50, 0)
                 if event.key == pygame.K_d:
                     for sprite in group_falling:
-                        sprite.rect.move_ip(50, 0)
+                        if sprite.rect.topright[0] < width:
+                            sprite.rect.move_ip(50, 0)
                 if event.key == pygame.K_s:
                     for sprite in group_falling:
                         sprite.rect.move_ip(0, 50)
