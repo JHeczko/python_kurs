@@ -61,29 +61,67 @@ class SingleList:
     def __iter__(self):   # wykorzystanie funkcji generatora
         node = self.head
         while node:
-            yield node.data
+            yield node
             node = node.next
 
     def __del__(self):
         self.clear()
 
-    # TODO te 3 metody
-    def remove_tail(self): pass   # klasy O(n)
-        # Zwraca cały węzeł, skraca listę.
-        # Dla pustej listy rzuca wyjątek ValueError.
+    def __len__(self):
+        return self.length
 
-    def join(self, other): pass   # klasy O(1)
-        # Węzły z listy other są przepinane do listy self na jej koniec.
-        # Po zakończeniu operacji lista other ma być pusta.
+    def __str__(self):
+        return str(f"{[int(str(x)) for x in self]}")
+
+    # TODO te 3 metody
+    # Zwraca cały węzeł, skraca listę.
+    # Dla pustej listy rzuca wyjątek ValueError.
+    def remove_tail(self): # klasy O(n)
+        if self.is_empty():
+            raise ValueError("Empty list")
+
+        x_prev = self.head
+        for x in self:
+            if x.next is None:
+                self.tail = x_prev
+                self.tail.next = None
+                self.length -= 1
+                return x
+            else:
+                x_prev = x
+
+    def join(self, other): # klasy O(1)
+        self.tail.next = other.head
+        self.tail = other.tail
+        self.length += other.length
+        other.clear()
 
     def clear(self):
+        for node in self:
+            del node
         self.head = None
+        self.tail = None
+        self.length = 0
+
 
 if __name__ == '__main__':
     # Single test
     slist = SingleList()
+    slist2 = SingleList()
     slist.insert_head(Node(11))  # [11]
     slist.insert_head(Node(22))  # [22, 11]
     slist.insert_tail(Node(33))  # [22, 11, 33]
-    for item in slist:  # kolejność 22, 11, 33
-        print(item)
+
+    slist2.insert_head(Node(3))  # [11]
+    slist2.insert_head(Node(2))  # [22, 11]
+    slist2.insert_tail(Node(1))  # [22, 11, 33]
+
+    print(slist, slist2, len(slist),len(slist2))
+
+    slist.join(slist2)
+
+    print(slist, slist2, len(slist),len(slist2))
+
+    print(slist.remove_tail())
+
+    print(slist)
