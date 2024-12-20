@@ -1,5 +1,4 @@
 import pytest
-from anyio.pytest_plugin import pytest_fixture_setup
 
 from Triangle import Triangle
 from Point import Point2D as Point

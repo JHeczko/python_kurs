@@ -1,3 +1,7 @@
+import itertools
+from os import terminal_size
+
+
 class Node:
     """Klasa reprezentująca węzeł listy jednokierunkowej."""
 
@@ -73,6 +77,25 @@ class SingleList:
     def __str__(self):
         return str(f"{[int(str(x)) for x in self]}")
 
+    # Funckja uzywana wylacznie do testow ze wzgledu na lepsza czytelności co do czego porównujemy czytelnosc
+    def _to_array(self):
+        return [x.data for x in self]
+
+    def __eq__(self, other):
+        x_i = self.__iter__()
+        y_i = other.__iter__()
+
+        for x,y in itertools.zip_longest(x_i, y_i):
+            if (x is None) ^ (y is None):
+                return False
+            if type(other) == list:
+                if x.data != y:
+                    return False
+            if type(other) == SingleList:
+                if x != y:
+                    return False
+        return True
+
     # TODO te 3 metody
     # Zwraca cały węzeł, skraca listę.
     # Dla pustej listy rzuca wyjątek ValueError.
@@ -103,7 +126,7 @@ class SingleList:
         self.tail = None
         self.length = 0
 
-
+#
 if __name__ == '__main__':
     # Single test
     slist = SingleList()
@@ -120,8 +143,4 @@ if __name__ == '__main__':
 
     slist.join(slist2)
 
-    print(slist, slist2, len(slist),len(slist2))
-
-    print(slist.remove_tail())
-
-    print(slist)
+    print(slist,slist2,len(slist),len(slist2))
