@@ -69,6 +69,18 @@ class SingleList:
             node = node.next
 
     def __del__(self):
+        for node in self:
+            next_node = node.next
+            if next_node is None:
+                node.next = None
+                del node
+                break
+            else:
+                node.next = None
+                del node
+
+
+
         self.clear()
 
     def __len__(self):
@@ -96,9 +108,6 @@ class SingleList:
                     return False
         return True
 
-    # TODO te 3 metody
-    # Zwraca cały węzeł, skraca listę.
-    # Dla pustej listy rzuca wyjątek ValueError.
     def remove_tail(self): # klasy O(n)
         if self.is_empty():
             raise ValueError("Empty list")
@@ -109,6 +118,7 @@ class SingleList:
                 self.tail = x_prev
                 self.tail.next = None
                 self.length -= 1
+                x.next = None
                 return x
             else:
                 x_prev = x
@@ -120,8 +130,6 @@ class SingleList:
         other.clear()
 
     def clear(self):
-        for node in self:
-            del node
         self.head = None
         self.tail = None
         self.length = 0

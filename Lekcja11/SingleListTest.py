@@ -23,7 +23,7 @@ class TestSingleList:
         assert list1 != [1,3,5,2,124]
         assert list1 == [22,11,33]
 
-    def test_insert(self,list1):
+    def test_insert_remove(self,list1):
         list1.insert_head(Node(11))
         assert list1 == list1
         assert list1 == [11,22,11,33]
@@ -34,10 +34,12 @@ class TestSingleList:
         node = list1.remove_head()
         assert list1 == [22, 11, 33, 33]
         assert node == Node(11)
+        assert node.next is None
 
         node = list1.remove_tail()
         assert list1 == [22, 11, 33]
         assert node == Node(33)
+        assert node.next is None
 
     def test_str(self,list1,list2):
         assert str(list1) == '[22, 11, 33]'
@@ -51,6 +53,8 @@ class TestSingleList:
     def test_clear_empty(self,list1):
         list1.clear()
         assert list1.is_empty() == True
+        assert list1.head is None
+        assert list1.tail is None
 
     def test_join(self,list1,list2):
         list1.join(list2)
@@ -58,6 +62,7 @@ class TestSingleList:
         assert list1.is_empty() == False
         assert list2.is_empty() == True
         assert list1 == [22,11,33,2,3,1]
+        assert len(list1) == 6
 
 if __name__ == '__main__':
     pytest.main()
