@@ -1,9 +1,6 @@
 import tkinter as tk
 import random
 
-from soupsieve.util import lower
-from tensorboard.summary.v1 import image
-
 
 class Application(tk.Frame):
     def __init__(self, parent: tk.Tk, title: str = "Kostki"):

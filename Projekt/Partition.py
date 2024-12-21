@@ -1,6 +1,3 @@
-from tensorflow.python.ops.variable_scope import set_variable_v1
-
-
 class Partition:
     def __init__(self, n):
         self.particies = [{i} for i in range(n)]
