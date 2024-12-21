@@ -48,7 +48,8 @@ class Labirynt:
                     maze_matrix[2 * row + 1][2 * col + 2] = 0
 
         # Dodaj wejście i wyjście
-        maze_matrix = self.add_entrance_and_exit(maze_matrix)
+        maze_matrix[0][1] = 0
+        maze_matrix[rows*2][cols*2-1] = 0
 
         return maze_matrix
 

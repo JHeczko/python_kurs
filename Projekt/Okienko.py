@@ -17,7 +17,7 @@ def generate_random_color():
 
 
 def create_lab(frame :tk.Frame, rows:int,columns:int):
-    size_block = 50
+    size_block = 20
 
     if type(rows) != int:
         rows = int(rows)
@@ -30,10 +30,9 @@ def create_lab(frame :tk.Frame, rows:int,columns:int):
     lab = Labirynt(rows,columns)
     lab.generate_random_labirynt()
     lab_matrix = lab.generate_maze_matrix()
-
-    canvas = tk.Canvas(frame,width=((2*columns)+1) * size_block, height=((rows*2)+1) * size_block)
-    canvas.pack(expand=1, fill='both')
     print(lab_matrix)
+    canvas = tk.Canvas(frame,width=((2*columns)+1) * size_block, height=((rows*2)+1) * size_block)
+    canvas.pack(side=tk.TOP)
 
     for i_row,row in enumerate(lab_matrix):
         for i_col, item in enumerate(row):
@@ -42,7 +41,7 @@ def create_lab(frame :tk.Frame, rows:int,columns:int):
             y1 = i_row * size_block
             x2 = x1 + size_block
             y2 = y1 + size_block
-            canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline="gray")
+            canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline="")
 
 
 
