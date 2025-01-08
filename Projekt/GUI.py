@@ -35,7 +35,7 @@ class LabiryntGUI(tk.Frame):
                             validatecommand=(validate_command, "%P"))
         height_label = tk.Label(frame2, text="Ilość wierszy:", bg=self.dark_gray, fg="white", font=system_font)
         width_label = tk.Label(frame2, text="Ilość kolumn:", bg=self.dark_gray, fg="white", font=system_font)
-        button_generate = tk.Button(frame2, text="Wygeneruj Labirynt", bg='gray', fg="white", font=system_font,
+        button_generate = tk.Button(frame2, text="Wygeneruj Labirynt", bg='gray', fg=self.dark_gray, font=system_font,
                                     command=lambda: self.create_lab(frame1, width_in.get(), height_in.get()))
 
         height_in.pack(side=tk.BOTTOM, pady=10)
