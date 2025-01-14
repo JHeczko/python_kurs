@@ -13,6 +13,7 @@ class Labirynt:
         self.wiersze = wiersze
         self.kolumny = kolumny
 
+        # generacja siatki
         for i in range(self.kolumny):
             for j in range(self.wiersze):
                 if kolumny*(j+1)+i < kolumny*wiersze:
@@ -21,6 +22,10 @@ class Labirynt:
                     self.graph_base.add_edge((kolumny*j)+i, (kolumny*j+i)+1)
 
     def plot(self,opt):
+        '''
+        :param opt: ten parametr mówi o tym, czy chcemy zobaczyc jak wyglada siatka z której budujemy nasze drzewo czy też sam graf labirynty (0 - drzewo rozpinajaca, 1-siatka)
+        :return: None, w zamian dostajemy wykresik gotowy
+        '''
         if opt==0:
             nx.draw(self.labirynt, with_labels=True, font_weight='bold')
         if opt==1:
@@ -28,6 +33,10 @@ class Labirynt:
         plt.show()
 
     def generate_maze_matrix(self):
+        '''
+        Przekształca postać grafu do postaci macierzowej siatki gdzie 1 to ściana a 0 to przejście tworzy na podstawie przejść w grafie, jeśli istnieje krawedź to między komórkami jest przejście
+        :return: macierz labiryntu
+        '''
         rows = self.wiersze
         cols = self.kolumny
 
@@ -53,9 +62,18 @@ class Labirynt:
         return maze_matrix
 
     def generate_random_labirynt(self):
+        '''
+        Wrapper do wygenerowania labiryntu
+        :return:
+        '''
         self.labirynt = self._kruskal_algorithm(self.graph_base)
 
     def _kruskal_algorithm(self, graph: nx.Graph):
+        '''
+        zmodyfikowana wersja losowego algorytmu kruskala, ktory zamiast brac, krawedz o najwiekszym priorytecie bierze ją losowo
+        :param graph: siatka przedstawiona jako graf, mozna ja zwizualizować za pomocą ``plot(int opt)``
+        :return: drzewo rozpinajace
+        '''
         g = nx.Graph()
         g.add_nodes_from([x for x in range(graph.number_of_nodes())])
 
