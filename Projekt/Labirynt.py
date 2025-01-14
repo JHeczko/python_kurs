@@ -80,14 +80,12 @@ class Labirynt:
         kolejka = []
         for edge in graph.edges():
             kolejka.append(edge)
-        max_int = len(kolejka)
+        np.random.shuffle(kolejka)
 
         partition = Partition(graph.number_of_nodes())
 
         while (len(kolejka) != 0) and (partition.size() > 1):
-            random_number = random.randint(0, max_int-1)
-            edge = kolejka[random_number]
-            max_int -= 1
+            edge = kolejka.pop()
 
             v0 = edge[0]
             v1 = edge[1]
@@ -97,6 +95,5 @@ class Labirynt:
             if not s==t:
                 partition.join(s,t)
                 g.add_edge(v0,v1)
-            kolejka.pop(random_number)
         return g
 
