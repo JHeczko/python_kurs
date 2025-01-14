@@ -59,7 +59,10 @@ class LabiryntGUI(tk.Frame):
         if type(columns) != int:
             columns = int(columns)
 
-        size_block = 300 / columns
+        if columns > rows:
+            size_block = 300 / columns
+        else:
+            size_block = 300 / rows
 
         for widget in frame.winfo_children():
             widget.destroy()

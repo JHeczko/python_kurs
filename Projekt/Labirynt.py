@@ -52,34 +52,6 @@ class Labirynt:
 
         return maze_matrix
 
-    def add_entrance_and_exit(self, maze_matrix):
-        rows, cols = maze_matrix.shape
-
-        # Możliwe pozycje dla wejścia i wyjścia (z krawędzi)
-        edges = []
-
-        # Górna i dolna krawędź
-        for col in range(1, cols, 2):
-            edges.append((0, col))  # Górna krawędź
-            edges.append((rows - 1, col))  # Dolna krawędź
-
-        # Lewa i prawa krawędź
-        for row in range(1, rows, 2):
-            edges.append((row, 0))  # Lewa krawędź
-            edges.append((row, cols - 1))  # Prawa krawędź
-
-        # Losowo wybierz wejście i wyjście
-        entrance = random.choice(edges)
-        edges.remove(entrance)
-        exit_ = random.choice(edges)
-
-        # Ustaw wejście i wyjście jako przejścia (`0`)
-        maze_matrix[entrance] = 0
-        maze_matrix[exit_] = 0
-
-        print(f"Wejście: {entrance}, Wyjście: {exit_}")
-        return maze_matrix
-
     def generate_random_labirynt(self):
         self.labirynt = self._kruskal_algorithm(self.graph_base)
 
