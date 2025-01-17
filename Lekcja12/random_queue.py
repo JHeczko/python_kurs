@@ -1,15 +1,55 @@
-# ZADANIE 12.8 (RANDOMQUEUE)
-#
-# Stworzyć ADT w postaci kolejki losowej, z której elementy będą pobierane w losowej kolejności. Zadbać o to, aby każda operacja była wykonywana w stałym czasie, niezależnie od liczby elementów w kolejce.
+import random
+
+
 class RandomQueue:
-    def __init__(self, size=10): pass
+    def __init__(self, size=10):
+        self.items = size * [None]
+        self.n = 0
+        self.size = size
 
-    def insert(self, item): pass   # wstawia element w czasie O(1)
+    def __str__(self):
+        return str(self.items)
 
-    def remove(self): pass   # zwraca losowy element w czasie O(1)
+    def __repr__(self):
+        return self.__str__()
 
-    def is_empty(self): pass
+    def insert(self, item):
+        if self.is_full():
+            raise ValueError("Queue is full")
+        self.items[self.n] = item
+        self.n += 1
 
-    def is_full(self): pass
+    def remove(self):
+        if self.is_empty():
+            raise ValueError("Queue is empty")
+        self.n -= 1
+        choice = random.randint(0, self.n)
+        data_rand = self.items[choice]
+        data_end = self.items[self.n]
+        if choice != self.n:
+            self.items[choice] = data_end
+        self.items[self.n] = None  # usuwam ostatni element
+        return data_rand
 
-    def clear(self): pass   # czyszczenie listy
+    def is_empty(self):
+        return self.n == 0
+
+    def is_full(self):
+        return self.n == self.size
+
+    def clear(self):
+        self.n = 0
+
+if __name__ == '__main__':
+    queue = RandomQueue()
+    queue.insert(1)
+    queue.insert(2)
+    queue.insert(3)
+    queue.insert(4)
+    queue.insert(5)
+    print(queue)
+    while not queue.is_empty():
+        print("="*20)
+        print(queue)
+        print(queue.remove())
+        print("=" * 20)
