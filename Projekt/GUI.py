@@ -15,7 +15,7 @@ class LabiryntGUI(tk.Frame):
         root.columnconfigure(0, minsize=600, weight=1)
         root.columnconfigure(1, weight=1)
         root.rowconfigure(0, weight=1)
-        validate_command = root.register(self.validate_input)
+        validate_command = root.register(self._validate_input)
 
         frame_placeholder = tk.Frame(root)
         frame1 = tk.Frame(frame_placeholder, bg=self.dark_gray)
@@ -45,7 +45,7 @@ class LabiryntGUI(tk.Frame):
         button_generate.pack(side=tk.TOP, pady=20)
 
 
-    def validate_input(self, new_value):
+    def _validate_input(self, new_value):
         # Allow empty input (to allow deletion) or digits only
         if new_value == "" or new_value.isdigit():
             return True
